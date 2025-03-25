@@ -1,73 +1,91 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Link from "next/link";
-
+import { auth, db } from "@/lib/firebase";
+import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
 
 export default function WritePage() {
   const [entry, setEntry] = useState("");
-  const [emotion, setEmotion] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [history, setHistory] = useState<{ date: string; entry: string; emotion: string }[]>([]);
-  const [todayText, setTodayText] = useState("");
-
-  useEffect(() => {
-    const savedEntry = localStorage.getItem("today-entry");
-    const savedEmotion = localStorage.getItem("today-emotion");
-    const savedHistory = localStorage.getItem("entry-history");
-    if (savedEntry && savedEntry.trim() !== "") {
-      setEntry(savedEntry);
-      setEmotion(savedEmotion || "");
-      setSubmitted(true);
-    }
-    if (savedHistory) {
-      setHistory(JSON.parse(savedHistory));
-    }
-
-    const now = new Date();
-    const days = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
-    const todayStr = `${now.getFullYear()}년 ${String(now.getMonth() + 1).padStart(2, '0')}월 ${String(now.getDate()).padStart(2, '0')}일 ${days[now.getDay()]}`;
-    setTodayText(todayStr);
-  }, []);
-
-  useEffect(() => {
-    if (submitted) {
-      const today = new Date().toLocaleDateString();
-      const isAlreadySaved = history.some(h => h.date === today && h.entry === entry);
-  
-      if (!isAlreadySaved) {
-        const newRecord = { date: today, entry, emotion };
-        const updatedHistory = [newRecord, ...history];
-        localStorage.setItem("today-entry", entry);
-        localStorage.setItem("today-emotion", emotion);
-        localStorage.setItem("entry-history", JSON.stringify(updatedHistory));
-        setHistory(updatedHistory);
-      }
-    }
-  }, [entry, emotion, submitted]);
-  
+  const [emotion, setEmotion] = useState("");
+  const [history, setHistory] = useState<any[]>([]);
+  const router = useRouter();
 
   const emotions = [
     { icon: "😊", label: "기쁨" },
     { icon: "😢", label: "슬픔" },
-    { icon: "😠", label: "화남" },
-    { icon: "😶", label: "무표정" },
+    { icon: "😡", label: "분노" },
+    { icon: "😨", label: "불안" },
+    { icon: "🥹", label: "감동" },
+    { icon: "🤔", label: "생각" },
   ];
 
+  const todayText = new Date().toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    weekday: "long",
+  });
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const diaryRef = collection(db, "users", user.uid, "diaries");
+      const snapshot = await getDocs(diaryRef);
+
+      const fetched = snapshot.docs.map(doc => ({
+        date: doc.id,
+        ...doc.data(),
+      }));
+
+      setHistory(fetched);
+    };
+
+    fetchHistory();
+  }, []);
+
+  const saveDiaryToFirestore = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("로그인이 필요해요!");
+      router.push("/login");
+      return;
+    }
+
+    const today = new Date().toISOString().split("T")[0];
+    const diaryRef = doc(db, "users", user.uid, "diaries", today);
+
+    try {
+      await setDoc(diaryRef, {
+        entry,
+        emotion,
+        createdAt: new Date(),
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error("저장 실패:", err);
+      alert("저장에 실패했어요. 다시 시도해 주세요.");
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center p-4 sm:p-6 min-h-screen bg-gradient-to-b from-pink-100 to-green-100">
+    <div className="min-h-screen flex flex-col items-center justify-start p-6 bg-gradient-to-b from-pink-100 to-green-100">
       <motion.h1
-        className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 text-center"
+        className="text-3xl font-bold text-gray-800 mb-4"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        오늘의 나 쓰기
+        오늘의 나를 기록하기
       </motion.h1>
 
       {!submitted ? (
-        <div className="w-full max-w-md p-4 sm:p-6 shadow-lg rounded-2xl bg-white">
+        <div className="w-full max-w-md p-4 shadow-lg rounded-2xl bg-white">
           <p className="text-base sm:text-lg text-gray-600 mb-2 text-center">{todayText}</p>
+
           <div className="flex justify-center gap-3 mb-4">
             {emotions.map((emo) => (
               <button
@@ -79,18 +97,16 @@ export default function WritePage() {
               </button>
             ))}
           </div>
+
           <textarea
             value={entry}
             onChange={(e) => setEntry(e.target.value)}
             placeholder="Remain me"
             className="w-full p-2 border rounded-lg text-sm min-h-[120px]"
           />
+
           <button
-            onClick={() => {
-              if (entry.trim() !== "") {
-                setSubmitted(true);
-              }
-            }}
+            onClick={saveDiaryToFirestore}
             className="mt-4 w-full bg-pink-200 text-white py-2 rounded-lg hover:bg-pink-300 text-sm"
           >
             저장하기
@@ -110,12 +126,6 @@ export default function WritePage() {
           >
             ← 다시 작성하기
           </button>
-          <Link href="/">
-  <button className="mt-2 w-full bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500 text-sm">
-    ← 홈으로 돌아가기
-  </button>
-</Link>
-
           <div className="mt-6 text-left">
             <h2 className="text-base font-semibold mb-2">📘 지난 일기</h2>
             <ul className="space-y-2">
