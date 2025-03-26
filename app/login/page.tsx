@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -23,6 +24,15 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-pink-100 to-pink-200 p-4">
+      {/* 로고 이미지 */}
+      <Image
+        src="/logo-pink.png"
+        alt="rema in me 로고"
+        width={120}
+        height={120}
+        className="mb-6"
+      />
+
       <div className="bg-white p-6 rounded-2xl shadow max-w-sm w-full">
         <h1 className="text-2xl font-bold text-pink-600 mb-4 text-center">로그인</h1>
         <input
