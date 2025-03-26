@@ -24,16 +24,20 @@ export default function LoginPage() {
 
   return (
     <div
-      className="min-h-screen bg-white flex flex-col items-center justify-center relative px-4"
+      className="min-h-screen flex flex-col items-center justify-center px-4 bg-cover bg-no-repeat bg-center"
       style={{
-        backgroundImage: `url("/logo-pink.png")`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'top center',
-        backgroundSize: '150px', // 로고 반 크기로 줄이기
+        backgroundImage: `url('/logo-pink.png')`,
+        backgroundSize: 'cover',
       }}
     >
-      <div className="w-full max-w-sm mt-48 bg-white/70 backdrop-blur-md p-6 rounded-3xl shadow-md">
-        <h1 className="text-2xl font-bold text-gray-700 mb-4 text-center">로그인</h1>
+      {/* 로고 텍스트 강조 */}
+      <div className="absolute top-14 text-3xl font-[500] text-pink-600 drop-shadow-md">
+        Rema in me
+      </div>
+
+      {/* 로그인 폼 */}
+      <div className="mt-32 w-full max-w-sm bg-white/70 backdrop-blur-lg p-6 rounded-3xl shadow-md">
+        <h1 className="text-xl font-semibold text-gray-700 mb-4 text-center">로그인</h1>
 
         <input
           type="email"
@@ -54,7 +58,7 @@ export default function LoginPage() {
 
         <button
           onClick={handleLogin}
-          className="w-full bg-gray-700 hover:bg-gray-800 text-white py-2 rounded-xl text-sm transition-all"
+          className="w-full bg-pink-500 hover:bg-pink-600 text-white py-2 rounded-xl text-sm transition-all"
         >
           로그인
         </button>
