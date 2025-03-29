@@ -23,49 +23,37 @@ export default function LoginPage() {
   };
 
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-center px-4 bg-cover bg-no-repeat bg-center"
-      style={{
-        backgroundImage: `url('/logo-pink.png')`,
-        backgroundSize: 'cover',
-      }}
-    >
-      {/* 로고 텍스트 강조 */}
-      <div className="absolute top-14 text-3xl font-[500] text-pink-600 drop-shadow-md">
-        Rema in me
-      </div>
-
-      {/* 로그인 폼 */}
-      <div className="mt-32 w-full max-w-sm bg-white/70 backdrop-blur-lg p-6 rounded-3xl shadow-md">
-        <h1 className="text-xl font-semibold text-gray-700 mb-4 text-center">로그인</h1>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-pink-100 via-pink-200 to-pink-100 px-4">
+      <div className="w-full max-w-sm bg-white/80 backdrop-blur-md p-6 rounded-3xl shadow-md">
+        <h1 className="text-3xl font-bold text-pink-500 mb-6 text-center">로그인</h1>
 
         <input
           type="email"
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-sm bg-white placeholder-gray-400"
+          className="w-full mb-3 p-3 border border-pink-200 rounded-xl text-sm bg-white placeholder-pink-300"
         />
         <input
           type="password"
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-sm bg-white placeholder-gray-400"
+          className="w-full mb-3 p-3 border border-pink-200 rounded-xl text-sm bg-white placeholder-pink-300"
         />
 
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
 
         <button
           onClick={handleLogin}
-          className="w-full bg-pink-500 hover:bg-pink-600 text-white py-2 rounded-xl text-sm transition-all"
+          className="w-full bg-pink-400 hover:bg-pink-500 text-white py-2 rounded-xl text-sm transition-all"
         >
           로그인
         </button>
 
-        <p className="text-sm text-center text-gray-600 mt-4">
+        <p className="text-sm text-center text-pink-600 mt-4">
           계정이 없으신가요?{' '}
-          <Link href="/signup" className="text-pink-500 hover:underline">
+          <Link href="/signup" className="underline hover:text-pink-700">
             회원가입
           </Link>
         </p>
