@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="pt-14 sm:pt-0">
         <Sidebar />
-        <main className="sm:ml-48">{children}</main>
+        <main className="ml-0 sm:ml-48">{children}</main>
       </body>
     </html>
   );

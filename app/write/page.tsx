@@ -72,7 +72,7 @@ export default function WritePage() {
   };
 
   return (
-    <div className="min-h-screen px-4 py-6 sm:px-4 sm:ml-0 ml-48 bg-gradient-to-b from-pink-100 to-green-100">
+    <div className="min-h-screen px-4 py-6 sm:px-4 sm:ml-48 ml-0 bg-gradient-to-b from-pink-100 to-green-100">
       <motion.h1
         className="text-3xl sm:text-xl font-bold text-gray-800 mb-4 text-center"
         initial={{ opacity: 0, y: -10 }}
@@ -115,16 +115,25 @@ export default function WritePage() {
         <div className="text-center mt-6 text-gray-700 w-full max-w-md mx-auto">
           기록이 저장되었습니다! ✨
           <div className="text-2xl mt-2">오늘의 감정: {emotion || "(선택 안됨)"}</div>
+
+          <button
+            onClick={() => router.push("/chat")}
+            className="mt-4 w-full bg-blue-400 text-white py-2 rounded-lg hover:bg-blue-500 text-sm"
+          >
+            과거의 나와 대화하기
+          </button>
+
           <button
             onClick={() => {
               setSubmitted(false);
               setEntry("");
               setEmotion("");
             }}
-            className="mt-4 w-full bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500 text-sm"
+            className="mt-2 w-full bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500 text-sm"
           >
             ← 다시 작성하기
           </button>
+
           <div className="mt-6 text-left">
             <h2 className="text-base font-semibold mb-2">📘 지난 일기</h2>
             <ul className="space-y-2">
