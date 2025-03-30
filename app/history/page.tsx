@@ -3,29 +3,41 @@
 import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, User } from "firebase/auth";
 
 export default function HistoryPage() {
+  const [user, setUser] = useState<User | null>(null);
   const [history, setHistory] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      console.log("onAuthStateChanged 실행됨");
+
+      if (!firebaseUser) {
+        console.log("사용자 없음");
+        setUser(null);
         setIsLoading(false);
         return;
       }
 
-      const diaryRef = collection(db, "users", user.uid, "diaries");
-      getDocs(diaryRef).then((snapshot) => {
+      setUser(firebaseUser);
+      console.log("사용자 있음:", firebaseUser.uid);
+
+      try {
+        const diaryRef = collection(db, "users", firebaseUser.uid, "diaries");
+        const snapshot = await getDocs(diaryRef);
         const fetched = snapshot.docs.map((doc) => ({
           date: doc.id,
           ...doc.data(),
         }));
 
         setHistory(fetched);
+      } catch (error) {
+        console.error("Firestore에서 데이터 불러오기 실패", error);
+      } finally {
         setIsLoading(false);
-      });
+      }
     });
 
     return () => unsubscribe();
@@ -33,8 +45,16 @@ export default function HistoryPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center ml-48 bg-white text-gray-500">
+      <div className="min-h-screen flex items-center justify-center ml-48 text-gray-500">
         ⏳ 일기를 불러오는 중입니다...
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center ml-48 text-gray-500">
+        🔐 로그인이 필요합니다.
       </div>
     );
   }
@@ -51,7 +71,7 @@ export default function HistoryPage() {
             </li>
           ))
         ) : (
-          <p className="text-gray-500">저장된 일기가 없어요 😢</p>
+          <p className="text-gray-500">저장된 일기가 아직 없어요 🥲</p>
         )}
       </ul>
     </div>
