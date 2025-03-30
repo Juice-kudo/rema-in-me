@@ -24,7 +24,7 @@ export default function Sidebar() {
       {/* 데스크탑 사이드바 */}
       <aside className="hidden sm:flex fixed left-0 top-0 h-full w-48 flex-col bg-pink-100 p-4 shadow-md z-10">
         <h2
-          className="text-2xl font-[Dancing Script] text-pink-600 mb-6 cursor-pointer"
+          className="text-2xl font-dancing text-pink-600 mb-6 cursor-pointer"
           onClick={() => router.push("/")}
         >
           rema in me
@@ -53,7 +53,7 @@ export default function Sidebar() {
       {/* 모바일 상단 메뉴 */}
       <nav className="sm:hidden w-full bg-pink-100 p-3 flex justify-between items-center shadow-md fixed top-0 left-0 z-10">
         <h2
-          className="text-xl font-[Dancing Script] text-pink-600"
+          className="text-xl font-dancing text-pink-600"
           onClick={() => router.push("/")}
         >
           rema in me
