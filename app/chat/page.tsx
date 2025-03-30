@@ -71,7 +71,7 @@ ${historyData.map((d) => `${d.date}: (${d.emotion}) ${d.entry}`).join("\n")}
   };
 
   return (
-    <div className="min-h-screen px-4 py-6 sm:px-4 sm:ml-0 ml-48 bg-gradient-to-b from-pink-50 to-white">
+    <div className="min-h-screen px-4 py-6 sm:px-4 sm:ml-48 ml-0 bg-gradient-to-b from-pink-50 to-white">
       <h1 className="text-2xl sm:text-xl font-bold text-pink-700 mb-4 text-center">
         💬 과거의 나와 대화하기
       </h1>

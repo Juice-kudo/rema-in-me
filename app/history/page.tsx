@@ -3,76 +3,46 @@
 import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { onAuthStateChanged, User } from "firebase/auth";
 
 export default function HistoryPage() {
-  const [user, setUser] = useState<User | null>(null);
   const [history, setHistory] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (!firebaseUser) {
-        setUser(null);
-        setIsLoading(false);
-        return;
-      }
+    const fetchHistory = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
 
-      setUser(firebaseUser);
+      const diaryRef = collection(db, "users", user.uid, "diaries");
+      const snapshot = await getDocs(diaryRef);
+      const fetched = snapshot.docs.map(doc => ({
+        date: doc.id,
+        ...doc.data(),
+      }));
 
-      try {
-        const diaryRef = collection(db, "users", firebaseUser.uid, "diaries");
-        const snapshot = await getDocs(diaryRef);
-        const fetched = snapshot.docs.map((doc) => ({
-          date: doc.id,
-          ...doc.data(),
-        }));
+      setHistory(fetched);
+    };
 
-        setHistory(fetched);
-      } catch (error) {
-        console.error("Firestore에서 데이터 불러오기 실패", error);
-      } finally {
-        setIsLoading(false);
-      }
-    });
-
-    return () => unsubscribe();
+    fetchHistory();
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center sm:ml-0 ml-48 text-gray-500 px-4 text-center">
-        ⏳ 일기를 불러오는 중입니다...
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center sm:ml-0 ml-48 text-gray-500 px-4 text-center">
-        🔐 로그인이 필요합니다.
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen px-4 py-6 sm:px-4 sm:ml-0 ml-48 bg-gradient-to-b from-pink-50 to-white">
-      <h1 className="text-2xl sm:text-xl font-bold text-pink-700 mb-6 text-center">
-        📘 지난 일기
+    <div className="min-h-screen px-4 py-10 sm:ml-48 ml-0 bg-gradient-to-b from-pink-100 to-white">
+      <h1 className="text-2xl sm:text-xl font-bold text-pink-600 mb-6 text-center">
+        📘 지난 일기 보기
       </h1>
 
-      <ul className="space-y-4">
-        {history.length > 0 ? (
-          history.map((item, idx) => (
-            <li key={idx} className="bg-white p-4 sm:p-3 rounded-xl shadow text-sm sm:text-base">
-              <div className="text-xs text-gray-500 mb-1">{item.date}</div>
-              <div className="text-base">{item.emotion} {item.entry}</div>
-            </li>
-          ))
+      <div className="w-full max-w-md mx-auto space-y-4">
+        {history.length === 0 ? (
+          <p className="text-center text-sm text-gray-500">아직 저장된 일기가 없어요.</p>
         ) : (
-          <p className="text-gray-500 text-center">저장된 일기가 아직 없어요 🥲</p>
+          history.map((item, idx) => (
+            <div key={idx} className="bg-white p-4 rounded-xl shadow text-left text-sm">
+              <div className="text-xs text-gray-500">{item.date}</div>
+              <div className="mt-1">{item.emotion} {item.entry}</div>
+            </div>
+          ))
         )}
-      </ul>
+      </div>
     </div>
   );
 }

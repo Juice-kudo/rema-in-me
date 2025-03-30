@@ -21,7 +21,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen px-4 py-10 sm:ml-0 ml-48 bg-gradient-to-b from-pink-100 to-pink-50 flex items-center justify-center">
+    <div className="min-h-screen px-4 py-10 sm:ml-48 ml-0 bg-gradient-to-b from-pink-100 to-pink-50 flex items-center justify-center">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-6">
         <h1 className="text-3xl sm:text-2xl font-bold text-pink-600 text-center mb-6 font-[Dancing Script]">
           Rema in me
