@@ -11,7 +11,7 @@ export default function Home() {
         Rema in me
       </h1>
 
-      <p className="text-gray-600 text-base sm:text-sm mb-10 max-w-md">
+      <p className="text-gray-800 text-base sm:text-sm mb-10 max-w-md leading-relaxed">
         감정과 가치관을 기록하고,  
         나중에 과거의 나와 다시 마주해보세요.
       </p>

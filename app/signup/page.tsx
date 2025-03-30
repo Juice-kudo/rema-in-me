@@ -38,21 +38,21 @@ export default function SignupPage() {
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full mb-4 p-2 border rounded-lg text-sm"
+          className="w-full mb-4 p-2 border rounded-lg text-sm placeholder-gray-600"
         />
         <input
           type="password"
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-4 p-2 border rounded-lg text-sm"
+          className="w-full mb-4 p-2 border rounded-lg text-sm placeholder-gray-600"
         />
         <input
           type="password"
           placeholder="비밀번호 확인"
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
-          className="w-full mb-4 p-2 border rounded-lg text-sm"
+          className="w-full mb-4 p-2 border rounded-lg text-sm placeholder-gray-600"
         />
 
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}

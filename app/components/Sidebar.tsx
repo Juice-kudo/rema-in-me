@@ -62,7 +62,7 @@ export default function Sidebar() {
         <select
           value={pathname}
           onChange={(e) => router.push(e.target.value)}
-          className="text-sm p-1 bg-white border rounded"
+          className="text-sm text-pink-700 bg-white border border-pink-300 rounded px-2 py-1 shadow-sm"
         >
           <option value="/write">기록하기</option>
           <option value="/chat">대화하기</option>

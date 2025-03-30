@@ -83,7 +83,7 @@ export default function WritePage() {
 
       {!submitted ? (
         <div className="w-full max-w-md mx-auto p-4 shadow-lg rounded-2xl bg-white">
-          <p className="text-base sm:text-sm text-gray-600 mb-2 text-center">{todayText}</p>
+          <p className="text-base sm:text-sm text-gray-700 mb-2 text-center">{todayText}</p>
 
           <div className="flex justify-center gap-3 mb-4">
             {emotions.map((emo) => (
@@ -101,7 +101,7 @@ export default function WritePage() {
             value={entry}
             onChange={(e) => setEntry(e.target.value)}
             placeholder="Remain me"
-            className="w-full p-2 border rounded-lg text-sm min-h-[120px]"
+            className="w-full p-2 border rounded-lg text-sm min-h-[120px] placeholder-gray-600"
           />
 
           <button
