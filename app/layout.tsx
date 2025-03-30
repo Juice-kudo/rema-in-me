@@ -1,5 +1,3 @@
-// app/layout.tsx
-
 import './globals.css';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
@@ -20,9 +18,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           rel="stylesheet"
         />
       </head>
-      <body className="flex">
+      <body className="pt-14 sm:pt-0">
         <Sidebar />
-        <div className="ml-48 w-full">{children}</div>
+        <main className="sm:ml-48">{children}</main>
       </body>
     </html>
   );
