@@ -6,8 +6,8 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-gradient-to-b from-pink-100 to-white sm:ml-0 ml-48">
-      <h1 className="text-5xl sm:text-4xl font-[Dancing Script] text-pink-600 mb-8">
+    <div className="min-h-screen px-4 py-10 sm:ml-48 ml-0 bg-gradient-to-b from-pink-100 to-white flex flex-col items-center justify-center text-center">
+      <h1 className="text-5xl sm:text-4xl font-dancing text-pink-600 mb-8">
         Rema in me
       </h1>
 
