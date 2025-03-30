@@ -1,67 +1,40 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsLoggedIn(!!user);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const handleLogout = () => {
-    signOut(auth);
-  };
+  const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-pink-100 flex flex-col justify-center items-center text-center p-6">
-      <h1
-        className="text-7xl mb-4 text-pink-600 tracking-wide"
-        style={{ fontFamily: "'Dancing Script', cursive" }}
->
+    <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-gradient-to-b from-pink-100 to-white sm:ml-0 ml-48">
+      <h1 className="text-5xl sm:text-4xl font-[Dancing Script] text-pink-600 mb-8">
         Rema in me
       </h1>
 
-      <p className="text-gray-700 mb-6 text-sm">
-        나의 오늘, 오늘의 나를 솔직하게 남겨주세요.
+      <p className="text-gray-600 text-base sm:text-sm mb-10 max-w-md">
+        감정과 가치관을 기록하고,  
+        나중에 과거의 나와 다시 마주해보세요.
       </p>
 
-      <div className="w-full max-w-xs flex flex-col gap-3">
-        {isLoggedIn ? (
-          <>
-            <Link href="/write">
-              <button className="w-full bg-pink-400 text-white py-2 rounded-xl text-sm hover:bg-pink-500">
-                나의 감정을 기록하러 가기
-              </button>
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="w-full text-gray-500 text-xs underline mt-1"
-            >
-              로그아웃
-            </button>
-          </>
-        ) : (
-          <>
-            <Link href="/login">
-              <button className="w-full bg-white text-pink-500 border border-pink-300 py-2 rounded-xl text-sm hover:bg-pink-50">
-                로그인
-              </button>
-            </Link>
-            <Link href="/signup">
-              <button className="w-full bg-pink-200 text-white py-2 rounded-xl text-sm hover:bg-pink-300">
-                회원가입
-              </button>
-            </Link>
-          </>
-        )}
+      <div className="flex flex-col gap-4 w-full max-w-xs">
+        <button
+          onClick={() => router.push("/write")}
+          className="bg-pink-300 hover:bg-pink-400 text-white py-2 px-4 rounded-lg text-sm"
+        >
+          ✏️ 오늘의 나를 기록하기
+        </button>
+        <button
+          onClick={() => router.push("/chat")}
+          className="bg-blue-300 hover:bg-blue-400 text-white py-2 px-4 rounded-lg text-sm"
+        >
+          💬 과거의 나와 대화하기
+        </button>
+        <button
+          onClick={() => router.push("/history")}
+          className="bg-green-300 hover:bg-green-400 text-white py-2 px-4 rounded-lg text-sm"
+        >
+          📘 지난 일기 보기
+        </button>
       </div>
     </div>
   );
