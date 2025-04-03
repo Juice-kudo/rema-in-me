@@ -1,7 +1,9 @@
+
 import './globals.css';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 import Sidebar from './components/Sidebar';
+
 
 
 export const metadata: Metadata = {
@@ -13,10 +15,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
       <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap"
-          rel="stylesheet"
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" 
+          rel="stylesheet" 
         />
+
+        
       </head>
       <body className="pt-14 sm:pt-0">
         <Sidebar />

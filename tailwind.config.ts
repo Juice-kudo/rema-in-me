@@ -8,7 +8,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        dancing: ['"Dancing Script"', "cursive"],
+        dancing: ["'Dancing Script'", "cursive"],
       },
     },
   },
