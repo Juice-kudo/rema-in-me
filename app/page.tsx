@@ -1,3 +1,4 @@
+"use client";
 import { auth } from "@/lib/firebase";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
