@@ -1,41 +1,46 @@
-"use client";
-
+import { auth } from "@/lib/firebase";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setIsLoggedIn(!!user);
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <div className="min-h-screen px-4 py-10 sm:ml-48 ml-0 bg-gradient-to-b from-pink-100 to-white flex flex-col items-center justify-center text-center">
-      <h1 className="text-5xl sm:text-4xl font-dancing text-pink-600 mb-8">
-        Rema in me
-      </h1>
+    <div className="min-h-screen flex flex-col items-center justify-center text-center bg-pink-100 text-gray-800">
+      <h1 className="text-3xl font-dancing mb-4">rema in me</h1>
+      <p className="mb-6">나의 겉모습이 아닌, 내면을 남겨보세요.</p>
 
-      <p className="text-gray-800 text-base sm:text-sm mb-10 max-w-md leading-relaxed">
-        감정과 가치관을 기록하고,  
-        나중에 과거의 나와 다시 마주해보세요.
-      </p>
-
-      <div className="flex flex-col gap-4 w-full max-w-xs">
+      {isLoggedIn ? (
         <button
           onClick={() => router.push("/write")}
-          className="bg-pink-300 hover:bg-pink-400 text-white py-2 px-4 rounded-lg text-sm"
+          className="px-6 py-2 bg-pink-300 text-white rounded-lg hover:bg-pink-400"
         >
-          ✏️ 오늘의 나를 기록하기
+          기록하러 가기
         </button>
-        <button
-          onClick={() => router.push("/chat")}
-          className="bg-blue-300 hover:bg-blue-400 text-white py-2 px-4 rounded-lg text-sm"
-        >
-          💬 과거의 나와 대화하기
-        </button>
-        <button
-          onClick={() => router.push("/history")}
-          className="bg-green-300 hover:bg-green-400 text-white py-2 px-4 rounded-lg text-sm"
-        >
-          📘 지난 일기 보기
-        </button>
-      </div>
+      ) : (
+        <div className="flex gap-4">
+          <button
+            onClick={() => router.push("/login")}
+            className="px-6 py-2 bg-pink-200 text-white rounded-lg hover:bg-pink-300"
+          >
+            로그인
+          </button>
+          <button
+            onClick={() => router.push("/signup")}
+            className="px-6 py-2 bg-gray-200 text-pink-700 rounded-lg hover:bg-gray-300"
+          >
+            회원가입
+          </button>
+        </div>
+      )}
     </div>
   );
 }
