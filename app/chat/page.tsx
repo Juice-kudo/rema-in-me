@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { auth, db } from "@/lib/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc } from "firebase/firestore";
 
 export default function ChatPage() {
   const [input, setInput] = useState("");
@@ -31,7 +31,8 @@ export default function ChatPage() {
   const handleChatSubmit = async () => {
     if (!input.trim()) return;
 
-    setMessages([...messages, { sender: "user", text: input }]);
+    const newMessages = [...messages, { sender: "user", text: input }];
+    setMessages(newMessages);
     setIsSending(true);
 
     const systemPrompt = `
@@ -63,7 +64,15 @@ ${historyData.map((d) => `${d.date}: (${d.emotion}) ${d.entry}`).join("\n")}
 
       const data = await response.json();
       const reply = data.choices?.[0]?.message?.content || "응답을 받을 수 없어요.";
-      setMessages((prev) => [...prev, { sender: "bot", text: reply }]);
+      const allMessages = [...newMessages, { sender: "bot", text: reply }];
+      setMessages(allMessages);
+
+      const user = auth.currentUser;
+      if (user) {
+        const today = new Date().toISOString().split("T")[0];
+        const chatRef = doc(db, "users", user.uid, "chats", today);
+        await setDoc(chatRef, { messages: allMessages }, { merge: true });
+      }
     } catch (err) {
       console.error("AI 응답 실패:", err);
       setMessages((prev) => [...prev, { sender: "bot", text: "죄송해요, 응답에 실패했어요." }]);
