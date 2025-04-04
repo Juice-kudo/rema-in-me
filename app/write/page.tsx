@@ -78,7 +78,7 @@ export default function WritePage() {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        오늘의 나를 기록하기
+        Today
       </motion.h1>
 
       {!submitted ? (

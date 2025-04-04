@@ -28,7 +28,7 @@ export default function HistoryPage() {
   return (
     <div className="min-h-screen px-4 py-10 sm:ml-48 ml-0 bg-gradient-to-b from-pink-100 to-white">
       <h1 className="text-2xl sm:text-xl font-bold text-pink-600 mb-6 text-center">
-        📘 지난 일기 보기
+        📘 History
       </h1>
 
       <div className="w-full max-w-md mx-auto space-y-4">

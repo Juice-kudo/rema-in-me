@@ -14,9 +14,9 @@ export default function Sidebar() {
   };
 
   const menus = [
-    { name: "기록하기", path: "/write" },
-    { name: "대화하기", path: "/chat" },
-    { name: "지난 일기", path: "/history" },
+    { name: "Remain", path: "/write" },
+    { name: "Me", path: "/chat" },
+    { name: "Diary", path: "/history" },
   ];
 
   return (
@@ -60,15 +60,22 @@ export default function Sidebar() {
         </h2>
 
         <select
-          value={pathname}
-          onChange={(e) => router.push(e.target.value)}
-          className="text-sm text-pink-700 bg-white border border-pink-300 rounded px-2 py-1 shadow-sm"
-        >
-          <option value="/write">기록하기</option>
-          <option value="/chat">대화하기</option>
-          <option value="/history">지난 일기</option>
-          <option value="/login">로그아웃</option>
-        </select>
+  value={pathname}
+  onChange={(e) => {
+    if (e.target.value === "logout") {
+      handleLogout(); // 실제 로그아웃
+    } else {
+      router.push(e.target.value); // 다른 페이지 이동
+    }
+  }}
+  className="text-sm text-pink-700 bg-white border border-pink-300 rounded px-2 py-1 shadow-sm"
+>
+  <option value="/write">Remain</option>
+  <option value="/chat">Me</option>
+  <option value="/history">Diary</option>
+  <option value="logout">로그아웃</option>
+</select>
+
       </nav>
     </>
   );
