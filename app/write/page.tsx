@@ -72,9 +72,9 @@ export default function WritePage() {
   };
 
   return (
-    <div className="min-h-screen px-4 py-6 sm:px-4 sm:ml-48 ml-0 bg-gradient-to-b from-pink-100 to-green-100">
+    <div className="min-h-screen px-4 py-6 sm:px-4 sm:ml-48 ml-0 bg-gradient-to-b from-pink-50 to-white">
       <motion.h1
-        className="text-3xl sm:text-xl font-bold text-gray-800 mb-4 text-center"
+        className="text-2xl sm:text-xl font-bold text-pink-600 mb-6 text-center"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
       >
