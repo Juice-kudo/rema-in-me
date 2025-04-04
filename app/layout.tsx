@@ -1,10 +1,7 @@
-
 import './globals.css';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 import Sidebar from './components/Sidebar';
-
-
 
 export const metadata: Metadata = {
   title: 'rema in me',
@@ -15,14 +12,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
       <head>
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" 
-          rel="stylesheet" 
+        {/* 🌸 Pacifico 폰트 추가 */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+          rel="stylesheet"
         />
-
-        
       </head>
-      <body className="pt-14 sm:pt-0">
+      {/* 🌸 전역 Pacifico 적용 */}
+      <body className="pt-14 sm:pt-0 font-pacifico">
         <Sidebar />
         <main className="ml-0 sm:ml-48">{children}</main>
       </body>
