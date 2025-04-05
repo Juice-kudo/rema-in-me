@@ -1,14 +1,20 @@
-// components/DrawerMenu.tsx
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 export default function DrawerMenu() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
+
+  const menus = [
+    { name: "Remain", path: "/write" },
+    { name: "Me", path: "/chat" },
+    { name: "Diary", path: "/history" },
+  ];
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -20,54 +26,46 @@ export default function DrawerMenu() {
       {/* 햄버거 버튼 */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-20 right-4 sm:hidden bg-pink-300 text-white px-4 py-2 rounded-full shadow"
+        className="fixed top-4 right-4 z-50 sm:hidden text-pink-600 text-xl"
       >
-        ☰
+        menu
       </button>
 
       {/* 드로어 메뉴 */}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${open ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed top-0 right-0 h-full w-48 bg-pink-100 shadow-lg transform transition-transform duration-300 z-40 ${
+          open ? "translate-x-0" : "translate-x-full"
+        }`}
       >
-        <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-lg font-bold text-pink-600">메뉴</h2>
-          <button onClick={() => setOpen(false)} className="text-gray-500">✕</button>
-        </div>
+        <div className="p-5 flex flex-col gap-4 text-right">
+          <button
+            onClick={() => setOpen(false)}
+            className="text-sm text-gray-500 hover:text-gray-700 self-end"
+          >
+            닫기 ✕
+          </button>
 
-        <div className="flex flex-col gap-3 p-4">
+          {menus.map((menu) => (
+            <button
+              key={menu.path}
+              onClick={() => {
+                router.push(menu.path);
+                setOpen(false);
+              }}
+              className={`text-base text-pink-700 hover:text-pink-500`}
+            >
+              {menu.name}
+            </button>
+          ))}
+
           <button
             onClick={() => {
-              router.push("/write");
+              handleLogout();
               setOpen(false);
             }}
-            className="text-left text-gray-700 hover:text-pink-500"
+            className="mt-6 text-base text-pink-700 hover:text-red-500"
           >
-            📓 오늘 일기 쓰기
-          </button>
-          <button
-            onClick={() => {
-              router.push("/chat");
-              setOpen(false);
-            }}
-            className="text-left text-gray-700 hover:text-pink-500"
-          >
-            💬 과거의 나와 대화
-          </button>
-          <button
-            onClick={() => {
-              router.push("/history");
-              setOpen(false);
-            }}
-            className="text-left text-gray-700 hover:text-pink-500"
-          >
-            📚 지난 일기 보기
-          </button>
-          <hr />
-          <button
-            onClick={handleLogout}
-            className="text-left text-red-500 hover:underline"
-          >
-            로그아웃
+            logout
           </button>
         </div>
       </div>
