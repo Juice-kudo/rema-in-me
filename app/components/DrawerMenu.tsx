@@ -36,7 +36,7 @@ export default function DrawerMenu() {
       {open && (
         <div className="fixed top-0 left-0 w-full h-full bg-pink-100 z-40 flex flex-col p-6 pt-12">
           <div className="flex justify-between items-center mb-10">
-            <span className="text-xl font-pacifico text-pink-700 ml-1">menu</span>
+            <span className="text-xl font-pacifico text-pink-700 ml-1">Rema-in-me</span>
             <button
               onClick={() => setOpen(false)}
               className="text-pink-600 text-2xl font-bold px-2"
