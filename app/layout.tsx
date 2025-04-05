@@ -12,13 +12,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
       <head>
-        {/* 🌸 Pacifico 폰트 추가 */}
+        {/* 🌸 Pacifico 폰트 불러오기 */}
         <link
           href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
           rel="stylesheet"
         />
+
+        {/* ✅ PWA 관련 설정 */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#ec4899" />
       </head>
-      {/* 🌸 전역 Pacifico 적용 */}
+
+      {/* 🌸 전체 Pacifico 폰트 적용 */}
       <body className="pt-14 sm:pt-0 font-pacifico">
         <Sidebar />
         <main className="ml-0 sm:ml-48">{children}</main>

@@ -40,7 +40,7 @@ export default function Home() {
         }`}
       >
         <Typewriter
-          words={["아름답고 눈부신, 오늘이 사라지기 전에"]}
+          words={["아름답고 눈부신, 오늘이 사라지기 전에..."]}
           loop={true}
           cursor
           cursorStyle="_"
