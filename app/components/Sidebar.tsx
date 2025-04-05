@@ -27,7 +27,7 @@ export default function Sidebar() {
           className="text-xl font-dancing text-pink-600 mb-6 cursor-pointer"
           onClick={() => router.push("/")}
         >
-          rema in me
+          Rema in me
         </h2>
 
         {menus.map((menu) => (
