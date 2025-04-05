@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 export default function DrawerMenu() {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
   const router = useRouter();
+  const pathname = usePathname();
 
   const menus = [
     { name: "Remain", path: "/write" },
@@ -19,56 +19,58 @@ export default function DrawerMenu() {
   const handleLogout = async () => {
     await signOut(auth);
     router.push("/login");
+    setOpen(false);
   };
 
   return (
-    <>
-      {/* 햄버거 버튼 */}
+    <div>
+      {/* 상단 고정 버튼 */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed top-4 right-4 z-50 sm:hidden text-pink-600 text-xl"
+        className="fixed top-4 left-4 z-50 bg-pink-300 text-white px-3 py-2 rounded shadow font-pacifico text-sm"
       >
         menu
       </button>
 
       {/* 드로어 메뉴 */}
-      <div
-        className={`fixed top-0 right-0 h-full w-35 bg-pink-100 shadow-lg transform transition-transform duration-300 z-40 ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="p-5 flex flex-col gap-4 text-right">
-          <button
-            onClick={() => setOpen(false)}
-            className="text-sm text-gray-500 hover:text-gray-700 self-end"
-          >
-            닫기 ✕
-          </button>
-
-          {menus.map((menu) => (
+      {open && (
+        <div className="fixed top-0 left-0 w-full h-full bg-pink-100 z-40 flex flex-col p-6 pt-12">
+          <div className="flex justify-between items-center mb-10">
+            <span className="text-xl font-pacifico text-pink-700 ml-1">menu</span>
             <button
-              key={menu.path}
-              onClick={() => {
-                router.push(menu.path);
-                setOpen(false);
-              }}
-              className={`text-base text-pink-700 hover:text-pink-500`}
+              onClick={() => setOpen(false)}
+              className="text-pink-600 text-2xl font-bold px-2"
             >
-              {menu.name}
+              ✕
             </button>
-          ))}
+          </div>
 
-          <button
-            onClick={() => {
-              handleLogout();
-              setOpen(false);
-            }}
-            className="mt-6 text-base text-pink-700 hover:text-red-500"
-          >
-            logout
-          </button>
+          <div className="flex flex-col gap-4">
+            {menus.map((menu) => (
+              <button
+                key={menu.path}
+                onClick={() => {
+                  router.push(menu.path);
+                  setOpen(false);
+                }}
+                className={`text-lg text-left px-2 py-2 rounded-md font-pacifico ${
+                  pathname === menu.path
+                    ? "text-white bg-pink-400"
+                    : "text-pink-600 hover:bg-pink-200"
+                }`}
+              >
+                {menu.name}
+              </button>
+            ))}
+            <button
+              onClick={handleLogout}
+              className="mt-4 text-lg px-2 py-2 text-pink-600 rounded-md hover:bg-pink-200 font-pacifico text-left"
+            >
+              logout
+            </button>
+          </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 }
