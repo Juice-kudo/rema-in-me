@@ -32,7 +32,7 @@ export default function Home() {
           cursorStyle="_"
           typeSpeed={110}
           deleteSpeed={0}
-          delaySpeed={1000}
+          delaySpeed={5000}
         />
       </p>
 
