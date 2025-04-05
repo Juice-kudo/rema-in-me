@@ -124,7 +124,7 @@ export default function ChatPage() {
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="과거의 나에게 질문해보세요..."
+          placeholder="오늘의 나를 남겨주세요"
           className="w-full p-2 border rounded-lg mt-2 text-sm min-h-[80px]"
         />
 

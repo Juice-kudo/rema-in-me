@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 @import "tailwindcss";
 
-/* ✅ 여기서 딱 한 번만 body에 폰트 선언 */
+/* 전체 바디에 감성 필기체 + 한글 부드러운 폰트 적용 */
 body {
-  font-family: 'Pacifico', cursive;
+  font-family: 'Pacifico', 'Noto Sans KR', cursive, sans-serif;
   background: var(--background);
   color: var(--foreground);
 }
