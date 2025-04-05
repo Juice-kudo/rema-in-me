@@ -4,6 +4,7 @@ import { auth } from "@/lib/firebase";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Typewriter } from "react-simple-typewriter";
+import InstallPrompt from "./components/InstallPrompt"; // 👈 설치 버튼 컴포넌트 임포트
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,29 +20,27 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // 타이핑된 문구가 4초 후 사라짐
     const timer = setTimeout(() => {
       setFade(true);
     }, 4000);
-
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center bg-gradient-to-b from-pink-100 to-white text-gray-800 px-6">
+    <div className="min-h-screen flex flex-col items-center justify-center text-center bg-gradient-to-b from-pink-100 to-white text-gray-800 px-6 relative">
       <h1 className="text-6xl sm:text-7xl font-pacifico text-pink-700 mb-4">
         Rema in me
       </h1>
 
-      {/* 👇 애니메이션 문구 + 페이드아웃 효과 */}
+      {/* 애니메이션 문구 + 페이드아웃 효과 */}
       <p
-        className={`text-lg sm:text-xl text-gray-600 h-12 mb-10 transition-opacity duration-4000 ${
+        className={`text-lg sm:text-xl text-gray-600 h-12 mb-10 transition-opacity duration-1000 ${
           fade ? "opacity-0" : "opacity-100"
         }`}
       >
         <Typewriter
-          words={["아름답고 눈부신, 오늘이 사라지기 전에..."]}
-          loop={true}
+          words={["아름답고 눈부신, 오늘이 사라지기 전에"]}
+          loop={false}
           cursor
           cursorStyle="_"
           typeSpeed={110}
@@ -73,6 +72,9 @@ export default function Home() {
           </button>
         </div>
       )}
+
+      {/* 👇 홈 화면에 추가 버튼 (PWA 설치용) */}
+      <InstallPrompt />
     </div>
   );
 }
