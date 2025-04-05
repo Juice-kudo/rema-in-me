@@ -4,26 +4,17 @@ import { auth } from "@/lib/firebase";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Typewriter } from "react-simple-typewriter";
-import InstallPrompt from "./components/InstallPrompt"; // 👈 설치 버튼 컴포넌트 임포트
+import InstallPrompt from "./components/InstallPrompt"; // 👈 PWA 설치 버튼
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [fade, setFade] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setIsLoggedIn(!!user);
     });
-
     return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setFade(true);
-    }, 4000);
-    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -32,12 +23,8 @@ export default function Home() {
         Rema in me
       </h1>
 
-      {/* 애니메이션 문구 + 페이드아웃 효과 */}
-      <p
-        className={`text-lg sm:text-xl text-gray-600 h-12 mb-10 transition-opacity duration-1000 ${
-          fade ? "opacity-0" : "opacity-100"
-        }`}
-      >
+      {/* 🌸 애니메이션 문구만 유지 */}
+      <p className="text-lg sm:text-xl text-gray-600 h-12 mb-10">
         <Typewriter
           words={["아름답고 눈부신, 오늘이 사라지기 전에"]}
           loop={false}
@@ -73,7 +60,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* 👇 홈 화면에 추가 버튼 (PWA 설치용) */}
+      {/* PWA 설치 버튼 */}
       <InstallPrompt />
     </div>
   );

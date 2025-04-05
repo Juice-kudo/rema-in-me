@@ -2,6 +2,7 @@ import './globals.css';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 import Sidebar from './components/Sidebar';
+import DrawerMenu from './components/DrawerMenu'; // 👉 드로어 메뉴 import 추가!
 
 export const metadata: Metadata = {
   title: 'rema in me',
@@ -25,7 +26,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
       {/* 🌸 전체 Pacifico 폰트 적용 */}
       <body className="pt-14 sm:pt-0 font-pacifico">
-        <Sidebar />
+        <Sidebar />         {/* 💻 데스크탑용 사이드바 */}
+        <DrawerMenu />      {/* 📱 모바일용 드로어 메뉴 */}
         <main className="ml-0 sm:ml-48">{children}</main>
       </body>
     </html>
