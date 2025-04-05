@@ -131,7 +131,7 @@ export default function ChatPage() {
         <button
           onClick={handleChatSubmit}
           disabled={isSending}
-          className="mt-2 w-full bg-blue-400 text-white py-2 rounded-lg hover:bg-blue-500 disabled:opacity-50 text-sm"
+          className="mt-2 w-full bg-pink-400 text-white py-2 rounded-lg hover:bg-blue-500 disabled:opacity-50 text-sm"
         >
           전송
         </button>

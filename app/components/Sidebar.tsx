@@ -56,7 +56,7 @@ export default function Sidebar() {
           className="text-2xl font-dancing text-pink-600"
           onClick={() => router.push("/")}
         >
-          rema in me
+          Rema in me
         </h2>
 
         <select
