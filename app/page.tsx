@@ -16,8 +16,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center bg-pink-100 text-gray-800">
-      <h1 className="text-4xl font-dancing text-pink-700">rema in me</h1>
-      <p className="mb-6">나의 겉모습이 아닌, 내면을 남겨보세요.</p>
+      <h1 className="text-4xl font-pacifico text-pink-700">Rema in me</h1>
+      <p className="mb-6">진정한 나를 남기는 그릇</p>
 
       {isLoggedIn ? (
         <button
