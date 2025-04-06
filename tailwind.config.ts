@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-const config: Config = {
+const config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -13,7 +13,6 @@ const config: Config = {
       },
     },
   },
-  // @ts-ignore 👉 TypeScript가 safelist 인식 못해서 무시 처리
   safelist: [
     "level-1",
     "level-2",
@@ -22,6 +21,6 @@ const config: Config = {
     "level-5",
   ],
   plugins: [],
-};
+} as unknown as Config; // ✅ 타입 단언으로 에러 방지
 
 export default config;
