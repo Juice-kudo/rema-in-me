@@ -1,0 +1,84 @@
+/* calendarStyle.css */
+/* calendarStyle.css */
+
+.react-calendar {
+    width: 100%;
+    max-width: 400px;
+    background: #fff0f5;
+    border: none;
+    font-family: 'Pacifico', cursive;
+    line-height: 1.8;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .react-calendar__navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .react-calendar__navigation button {
+    background: transparent;
+    color: #ec4899;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .react-calendar__month-view__weekdays {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #ec4899;
+  }
+  
+  .react-calendar__tile {
+    background: transparent;
+    border-radius: 8px;
+    text-align: center;
+    padding: 0.6rem 0.2rem;
+    font-size: 0.85rem;
+    transition: background 0.3s;
+  }
+  
+  .react-calendar__tile--now {
+    background: #ffe4e6;
+    border-radius: 8px;
+  }
+  
+  .react-calendar__tile--active {
+    background: #f9a8d4 !important;
+    color: white;
+  }
+  
+  .react-calendar__tile:hover {
+    background: #fcd5ce;
+  }
+  
+.react-calendar__tile {
+    padding: 0.75rem !important;
+  }
+  
+  .calendar-good {
+    background-color: #fbcfe8; /* 진한 분홍 (😊) */
+  }
+  .calendar-nice {
+    background-color: #fcd5ec; /* 감동 (🥹) */
+  }
+  .calendar-neutral {
+    background-color: #fdf2f8; /* 중립 (🤔) */
+  }
+  .calendar-sad {
+    background-color: #f8fafc; /* 슬픔 (😢) */
+  }
+  .calendar-anxious {
+    background-color: #fff1f2; /* 불안 (😨) */
+  }
+  .calendar-angry {
+    background-color: #fef2f2; /* 화남 (😡) */
+  }

@@ -1,0 +1,31 @@
+/* 요일 줄이기 (Mon, Tue...) */
+.react-calendar__month-view__weekdays__weekday abbr {
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #ec4899; /* 예쁜 핑크 */
+  }
+  
+  /* 요일 한글로 나오는 걸 영어로 강제 덮어쓰기 */
+  .react-calendar__month-view__weekdays__weekday abbr[title="Sunday"]::after {
+    content: "Sun";
+  }
+  .react-calendar__month-view__weekdays__weekday abbr[title="Monday"]::after {
+    content: "Mon";
+  }
+  .react-calendar__month-view__weekdays__weekday abbr[title="Tuesday"]::after {
+    content: "Tue";
+  }
+  .react-calendar__month-view__weekdays__weekday abbr[title="Wednesday"]::after {
+    content: "Wed";
+  }
+  .react-calendar__month-view__weekdays__weekday abbr[title="Thursday"]::after {
+    content: "Thu";
+  }
+  .react-calendar__month-view__weekdays__weekday abbr[title="Friday"]::after {
+    content: "Fri";
+  }
+  .react-calendar__month-view__weekdays__weekday abbr[title="Saturday"]::after {
+    content: "Sat";
+  }
+  

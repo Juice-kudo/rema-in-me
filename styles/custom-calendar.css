@@ -1,0 +1,28 @@
+/* custom-calendar.css */
+
+.react-calendar {
+    border: none;
+    font-family: 'Pacifico', cursive;
+    background-color: transparent;
+  }
+  
+  .react-calendar__tile {
+    height: 70px;
+    transition: all 0.3s ease;
+  }
+  
+  .react-calendar__tile--now {
+    background-color: #fce4ec;
+  }
+  
+  .react-calendar__tile--active {
+    background-color: #f8bbd0 !important;
+    color: white;
+  }
+  
+  .react-calendar__navigation {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #ec4899;
+  }
+  

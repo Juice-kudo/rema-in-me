@@ -1,0 +1,19 @@
+/* app/history/calendar.css */
+.react-calendar {
+    width: 100%;
+    border: none;
+    font-family: 'Pacifico', cursive;
+  }
+  
+  .react-calendar__tile {
+    height: 60px;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+  }
+  
+  .react-calendar__tile--active {
+    background: #f9a8d4 !important;
+    color: white;
+  }
+  
