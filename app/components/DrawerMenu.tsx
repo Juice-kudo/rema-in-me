@@ -1,14 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { signOut } from "firebase/auth";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 export default function DrawerMenu() {
   const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const menus = [
     { name: "Remain", path: "/write" },
@@ -34,7 +42,7 @@ export default function DrawerMenu() {
 
       {/* 드로어 메뉴 */}
       {open && (
-        <div className="fixed top-0 left-0 w-full h-full bg-pink-100 z-40 flex flex-col p-6 pt-12">
+        <div className="fixed top-0 left-0 w-full h-full bg-pink-100 z-40 flex flex-col p-6 pt-16">
           <div className="flex justify-between items-center mb-10">
             <span className="text-xl font-pacifico text-pink-700 ml-1">Rema-in-me</span>
             <button
@@ -62,12 +70,16 @@ export default function DrawerMenu() {
                 {menu.name}
               </button>
             ))}
-            <button
-              onClick={handleLogout}
-              className="mt-4 text-lg px-2 py-2 text-pink-600 rounded-md hover:bg-pink-200 font-pacifico text-left"
-            >
-              logout
-            </button>
+
+            {/* ✅ 로그인 된 경우만 로그아웃 버튼 표시 */}
+            {isLoggedIn && (
+              <button
+                onClick={handleLogout}
+                className="mt-4 text-lg px-2 py-2 text-pink-600 rounded-md hover:bg-pink-200 font-pacifico text-left"
+              >
+                logout
+              </button>
+            )}
           </div>
         </div>
       )}
