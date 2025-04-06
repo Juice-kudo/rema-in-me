@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "@/styles/custom-calendar.css";
+import "@/styles/custom-calendar.css"; // 색상 정의한 CSS
 
 import { auth, db } from "@/lib/firebase";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
@@ -80,14 +80,15 @@ export default function HistoryPage() {
       </div>
 
       {selectedDiary && selectedDate && (
-        <div className="mt-6 max-w-md mx-auto p-4 bg-white/80 backdrop-blur rounded-xl shadow text-left text-sm whitespace-pre-wrap break-words">
+        <div className="mt-6 max-w-md mx-auto p-4 bg-white/80 backdrop-blur rounded-xl shadow text-left text-sm break-words whitespace-pre-wrap">
           <div className="text-pink-500 font-bold mb-2">
             📅 {selectedDate.toLocaleDateString("ko-KR")}
           </div>
           <div className="text-xl mb-2">{selectedDiary.emotion}</div>
-          <div className="text-gray-700 leading-relaxed">
+          <div className="text-gray-700 whitespace-pre-wrap break-words text-sm leading-relaxed">
             {selectedDiary.entry}
           </div>
+
         </div>
       )}
     </div>
