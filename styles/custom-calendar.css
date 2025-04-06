@@ -1,20 +1,76 @@
-.react-calendar__tile.level-5 {
-  background-color: #fbb6ce !important;
-  border-radius: 9999px;
+/* styles/custom-calendar.css */
+
+.react-calendar {
+  border: none;
+  width: 100%;
+  max-width: 100%;
+  background-color: white;
+  border-radius: 1.5rem;
+  font-family: inherit;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
-.react-calendar__tile.level-4 {
-  background-color: #fcd5e4 !important;
-  border-radius: 9999px;
+
+.react-calendar__navigation button {
+  color: #ec4899;
+  font-weight: bold;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.75rem;
+  transition: background-color 0.3s;
 }
-.react-calendar__tile.level-3 {
-  background-color: #fde2ef !important;
-  border-radius: 9999px;
+
+.react-calendar__navigation button:hover {
+  background-color: #ffe4e6;
 }
-.react-calendar__tile.level-2 {
+
+.react-calendar__tile {
+  padding: 0.75rem 0;
+  border-radius: 9999px;
+  text-align: center;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.react-calendar__tile:enabled:hover {
+  background-color: #fbcfe8;
+  transform: scale(1.05);
+}
+
+.react-calendar__tile--now {
+  background: #f9a8d4;
+  color: white;
+}
+
+.react-calendar__tile--active {
+  background: #ec4899;
+  color: white;
+}
+
+/* 색상 레벨별 배경 클래스 */
+.level-1 {
   background-color: #fff0f5 !important;
-  border-radius: 9999px;
 }
-.react-calendar__tile.level-1 {
-  background-color: #ffffff !important;
-  border-radius: 9999px;
+.level-2 {
+  background-color: #fde2ef !important;
+}
+.level-3 {
+  background-color: #fcd5e4 !important;
+}
+.level-4 {
+  background-color: #fbb6ce !important;
+}
+.level-5 {
+  background-color: #f472b6 !important;
+  color: white;
+}
+
+/* 달력 위쪽 간격을 줄이기 위해 */
+.react-calendar__month-view__weekdays {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #9ca3af;
+  padding-bottom: 0.5rem;
 }
