@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "@/styles/custom-calendar.css"; // 색상 정의한 CSS
+import "@/styles/custom-calendar.css";
 
 import { auth, db } from "@/lib/firebase";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
@@ -19,6 +19,7 @@ export default function HistoryPage() {
       if (!user) return;
 
       const snapshot = await getDocs(collection(db, "users", user.uid, "diaries"));
+
       const data: { [key: string]: string } = {};
       snapshot.forEach((doc) => {
         const { emotion } = doc.data();
@@ -51,13 +52,19 @@ export default function HistoryPage() {
 
   const emotionToLevel = (emo: string) => {
     switch (emo) {
-      case "😊": return "level-5";
-      case "🥹": return "level-4";
-      case "🤔": return "level-3";
-      case "😢": return "level-2";
+      case "😊":
+        return "level-5";
+      case "🥹":
+        return "level-4";
+      case "🤔":
+        return "level-3";
+      case "😢":
+        return "level-2";
       case "😨":
-      case "😡": return "level-1";
-      default: return "";
+      case "😡":
+        return "level-1";
+      default:
+        return "";
     }
   };
 
@@ -80,15 +87,14 @@ export default function HistoryPage() {
       </div>
 
       {selectedDiary && selectedDate && (
-        <div className="mt-6 max-w-md mx-auto p-4 bg-white/80 backdrop-blur rounded-xl shadow text-left text-sm break-words whitespace-pre-wrap">
+        <div className="mt-6 max-w-md mx-auto p-4 bg-white/80 backdrop-blur rounded-xl shadow text-left text-sm whitespace-pre-wrap break-words overflow-auto">
           <div className="text-pink-500 font-bold mb-2">
             📅 {selectedDate.toLocaleDateString("ko-KR")}
           </div>
           <div className="text-xl mb-2">{selectedDiary.emotion}</div>
-          <div className="text-gray-700 whitespace-pre-wrap break-words text-sm leading-relaxed">
+          <div className="text-gray-700 leading-relaxed text-sm">
             {selectedDiary.entry}
           </div>
-
         </div>
       )}
     </div>
