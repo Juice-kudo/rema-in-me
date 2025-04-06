@@ -22,3 +22,14 @@ body {
     --foreground: #ededed;
   }
 }
+
+/* 입력창 텍스트 색상 및 placeholder 색 조정 */
+textarea,
+input {
+  color: #444; /* 진한 회색으로 가독성 향상 */
+}
+
+textarea::placeholder,
+input::placeholder {
+  color: #aaa; /* 살짝 연한 회색, 눈에 띄되 방해되지 않게 */
+}
