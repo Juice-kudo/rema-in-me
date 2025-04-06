@@ -1,31 +1,17 @@
-/* 요일 줄이기 (Mon, Tue...) */
-.react-calendar__month-view__weekdays__weekday abbr {
-    text-decoration: none;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #ec4899; /* 예쁜 핑크 */
+/* 색상 단계에 따른 배경 스타일 */
+.react-calendar__tile.level-5 {
+    background-color: #fbb6ce !important; /* 😊 */
   }
-  
-  /* 요일 한글로 나오는 걸 영어로 강제 덮어쓰기 */
-  .react-calendar__month-view__weekdays__weekday abbr[title="Sunday"]::after {
-    content: "Sun";
+  .react-calendar__tile.level-4 {
+    background-color: #fcd5e4 !important; /* 🥹 */
   }
-  .react-calendar__month-view__weekdays__weekday abbr[title="Monday"]::after {
-    content: "Mon";
+  .react-calendar__tile.level-3 {
+    background-color: #fde2ef !important; /* 🤔 */
   }
-  .react-calendar__month-view__weekdays__weekday abbr[title="Tuesday"]::after {
-    content: "Tue";
+  .react-calendar__tile.level-2 {
+    background-color: #fff0f5 !important; /* 😢 */
   }
-  .react-calendar__month-view__weekdays__weekday abbr[title="Wednesday"]::after {
-    content: "Wed";
-  }
-  .react-calendar__month-view__weekdays__weekday abbr[title="Thursday"]::after {
-    content: "Thu";
-  }
-  .react-calendar__month-view__weekdays__weekday abbr[title="Friday"]::after {
-    content: "Fri";
-  }
-  .react-calendar__month-view__weekdays__weekday abbr[title="Saturday"]::after {
-    content: "Sat";
+  .react-calendar__tile.level-1 {
+    background-color: #ffffff !important; /* 😨😡 */
   }
   

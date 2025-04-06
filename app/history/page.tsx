@@ -3,22 +3,22 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "@/styles/custom-calendar.css"; // 직접 커스터마이징한 스타일
+import "@/styles/custom-calendar.css";
 
 import { auth, db } from "@/lib/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 
 export default function HistoryPage() {
   const [diaries, setDiaries] = useState<{ [key: string]: string }>({});
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDiary, setSelectedDiary] = useState<{ entry: string; emotion: string } | null>(null);
 
   useEffect(() => {
     const fetchDiaries = async () => {
       const user = auth.currentUser;
       if (!user) return;
 
-      const snapshot = await getDocs(
-        collection(db, "users", user.uid, "diaries")
-      );
+      const snapshot = await getDocs(collection(db, "users", user.uid, "diaries"));
 
       const data: { [key: string]: string } = {};
       snapshot.forEach((doc) => {
@@ -32,21 +32,39 @@ export default function HistoryPage() {
     fetchDiaries();
   }, []);
 
-  const emotionColor = (emo: string) => {
+  const handleDateClick = async (date: Date) => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const dateStr = date.toISOString().split("T")[0];
+    setSelectedDate(date);
+
+    const diaryRef = doc(db, "users", user.uid, "diaries", dateStr);
+    const diarySnap = await getDoc(diaryRef);
+
+    if (diarySnap.exists()) {
+      const { entry, emotion } = diarySnap.data();
+      setSelectedDiary({ entry, emotion });
+    } else {
+      setSelectedDiary(null);
+    }
+  };
+
+  const emotionToLevel = (emo: string) => {
     switch (emo) {
       case "😊":
-        return "#fbb6ce"; // 진한 핑크
+        return "level-5";
       case "🥹":
-        return "#fcd5e4";
+        return "level-4";
       case "🤔":
-        return "#fde2ef";
+        return "level-3";
       case "😢":
-        return "#fff0f5";
+        return "level-2";
       case "😨":
       case "😡":
-        return "#ffffff"; // 거의 흰색
+        return "level-1";
       default:
-        return "transparent";
+        return "";
     }
   };
 
@@ -58,26 +76,25 @@ export default function HistoryPage() {
 
       <div className="max-w-md mx-auto bg-white shadow-md rounded-2xl p-4">
         <Calendar
-          locale="en-US"
-          tileContent={({ date, view }) => {
+          locale="en"
+          onClickDay={handleDateClick}
+          tileClassName={({ date }) => {
             const dateStr = date.toISOString().split("T")[0];
             const emotion = diaries[dateStr];
-
-            return (
-              <div
-                className="w-full h-full rounded-full"
-                style={{
-                  backgroundColor: emotionColor(emotion),
-                  transition: "all 0.3s ease",
-                  paddingTop: "10px",
-                }}
-              >
-                <span className="text-xl">{emotion}</span>
-              </div>
-            );
+            return emotionToLevel(emotion);
           }}
         />
       </div>
+
+      {selectedDiary && selectedDate && (
+        <div className="mt-6 max-w-md mx-auto p-4 bg-white/80 backdrop-blur rounded-xl shadow text-left text-sm whitespace-pre-wrap break-words">
+          <div className="text-pink-500 font-bold mb-2">
+            📅 {selectedDate.toLocaleDateString("ko-KR")}
+          </div>
+          <div className="text-xl mb-2">{selectedDiary.emotion}</div>
+          <div className="text-gray-700">{selectedDiary.entry}</div>
+        </div>
+      )}
     </div>
   );
 }
