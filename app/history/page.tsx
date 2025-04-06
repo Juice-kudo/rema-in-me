@@ -92,9 +92,10 @@ export default function HistoryPage() {
             📅 {selectedDate.toLocaleDateString("ko-KR")}
           </div>
           <div className="text-xl mb-2">{selectedDiary.emotion}</div>
-          <div className="text-gray-700 leading-relaxed text-sm">
+          <div className="text-gray-700 leading-relaxed text-sm whitespace-pre-wrap break-words">
             {selectedDiary.entry}
           </div>
+
         </div>
       )}
     </div>

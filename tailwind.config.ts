@@ -1,5 +1,3 @@
-// tailwind.config.ts
-
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -7,6 +5,15 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
+  theme: {
+    extend: {
+      fontFamily: {
+        pacifico: ["'Pacifico'", "cursive"],
+        dancing: ["'Dancing Script'", "cursive"],
+      },
+    },
+  },
+  // @ts-ignore 👉 TypeScript가 safelist 인식 못해서 무시 처리
   safelist: [
     "level-1",
     "level-2",
@@ -14,13 +21,6 @@ const config: Config = {
     "level-4",
     "level-5",
   ],
-  theme: {
-    extend: {
-      fontFamily: {
-        pacifico: ["'Pacifico'", "cursive"],
-      },
-    },
-  },
   plugins: [],
 };
 
