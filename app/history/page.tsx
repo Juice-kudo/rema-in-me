@@ -19,7 +19,6 @@ export default function HistoryPage() {
       if (!user) return;
 
       const snapshot = await getDocs(collection(db, "users", user.uid, "diaries"));
-
       const data: { [key: string]: string } = {};
       snapshot.forEach((doc) => {
         const { emotion } = doc.data();
@@ -52,19 +51,13 @@ export default function HistoryPage() {
 
   const emotionToLevel = (emo: string) => {
     switch (emo) {
-      case "😊":
-        return "level-5";
-      case "🥹":
-        return "level-4";
-      case "🤔":
-        return "level-3";
-      case "😢":
-        return "level-2";
+      case "😊": return "level-5";
+      case "🥹": return "level-4";
+      case "🤔": return "level-3";
+      case "😢": return "level-2";
       case "😨":
-      case "😡":
-        return "level-1";
-      default:
-        return "";
+      case "😡": return "level-1";
+      default: return "";
     }
   };
 
@@ -92,7 +85,9 @@ export default function HistoryPage() {
             📅 {selectedDate.toLocaleDateString("ko-KR")}
           </div>
           <div className="text-xl mb-2">{selectedDiary.emotion}</div>
-          <div className="text-gray-700">{selectedDiary.entry}</div>
+          <div className="text-gray-700 leading-relaxed">
+            {selectedDiary.entry}
+          </div>
         </div>
       )}
     </div>

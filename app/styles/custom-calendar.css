@@ -1,17 +1,16 @@
-/* 색상 단계에 따른 배경 스타일 */
-.react-calendar__tile.level-5 {
-    background-color: #fbb6ce !important; /* 😊 */
-  }
-  .react-calendar__tile.level-4 {
-    background-color: #fcd5e4 !important; /* 🥹 */
-  }
-  .react-calendar__tile.level-3 {
-    background-color: #fde2ef !important; /* 🤔 */
+.react-calendar__tile.level-1 {
+    background-color: #fff0f5 !important;
   }
   .react-calendar__tile.level-2 {
-    background-color: #fff0f5 !important; /* 😢 */
+    background-color: #fde2ef !important;
   }
-  .react-calendar__tile.level-1 {
-    background-color: #ffffff !important; /* 😨😡 */
+  .react-calendar__tile.level-3 {
+    background-color: #fcd5e4 !important;
+  }
+  .react-calendar__tile.level-4 {
+    background-color: #fbb6ce !important;
+  }
+  .react-calendar__tile.level-5 {
+    background-color: #f472b6 !important;
   }
   
