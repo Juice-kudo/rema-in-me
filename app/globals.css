@@ -33,3 +33,20 @@ textarea::placeholder,
 input::placeholder {
   color: #aaa; /* 살짝 연한 회색, 눈에 띄되 방해되지 않게 */
 }
+
+@keyframes handwriting {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-handwrite {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: handwriting 2.5s steps(30, end) forwards;
+  border-right: 1px solid #ec4899;
+}

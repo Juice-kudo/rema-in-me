@@ -18,7 +18,7 @@ export default function WritePage() {
     { icon: "🔥", label: "분노" },
     { icon: "🫥", label: "불안" },
     { icon: "✨", label: "감동" },
-    { icon: "🧠", label: "생각" },
+    { icon: "💭", label: "생각" },
   ];
 
   const todayText = new Date().toLocaleDateString("ko-KR", {
@@ -127,14 +127,16 @@ export default function WritePage() {
             exit={{ opacity: 0 }}
             className="text-center mt-10 text-gray-700 w-full max-w-md mx-auto"
           >
-            <motion.p
-              className="text-xl sm:text-2xl text-pink-500 font-semibold mb-8 font-pacifico"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.8 }}
+            <motion.div
+              className="text-xl sm:text-2xl text-pink-500 font-semibold mb-6 handwritten"
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 2, ease: "easeInOut" }}
             >
-              이 순간을, 기억할게요.
-            </motion.p>
+              <span className="inline-block overflow-hidden whitespace-nowrap animate-handwrite">
+                이 순간을, 기억할게요.
+              </span>
+            </motion.div>
 
             <button
               onClick={() => {
