@@ -13,12 +13,12 @@ export default function WritePage() {
   const router = useRouter();
 
   const emotions = [
-    { icon: "😊", label: "기쁨" },
-    { icon: "😢", label: "슬픔" },
-    { icon: "😡", label: "분노" },
-    { icon: "😨", label: "불안" },
-    { icon: "🥹", label: "감동" },
-    { icon: "🤔", label: "생각" },
+    { icon: "🌸", label: "기쁨" },
+    { icon: "💧", label: "슬픔" },
+    { icon: "🔥", label: "분노" },
+    { icon: "🫥", label: "불안" },
+    { icon: "✨", label: "감동" },
+    { icon: "🧠", label: "생각" },
   ];
 
   const todayText = new Date().toLocaleDateString("ko-KR", {
@@ -36,7 +36,6 @@ export default function WritePage() {
       return;
     }
 
-    // ✅ 한국 시간 기준으로 날짜 저장
     const now = new Date();
     const koreaTime = new Date(now.getTime() + 9 * 60 * 60 * 1000);
     const today = koreaTime.toISOString().split("T")[0];
@@ -82,7 +81,11 @@ export default function WritePage() {
                 <button
                   key={emo.label}
                   onClick={() => setEmotion(emo.icon)}
-                  className={`text-2xl ${emotion === emo.icon ? "scale-125" : "opacity-50"}`}
+                  className={`text-2xl transition-transform duration-300 ${
+                    emotion === emo.icon
+                      ? "scale-125 animate-bounce ring-2 ring-pink-300"
+                      : "opacity-50"
+                  }`}
                 >
                   {emo.icon}
                 </button>
@@ -95,7 +98,7 @@ export default function WritePage() {
               placeholder="Remain me"
               className="w-full p-2 border rounded-lg text-sm min-h-[120px] placeholder-gray-600"
             />
-            {/* 글자 수 & 멘트 */}
+
             <div className="mt-2 text-sm text-right text-gray-500">
               {entry.length}자{" "}
               <span className="ml-2 text-pink-400">
@@ -108,7 +111,6 @@ export default function WritePage() {
                   : "이 순간, 진심이 담겼네요"}
               </span>
             </div>
-
 
             <button
               onClick={saveDiaryToFirestore}
@@ -123,17 +125,20 @@ export default function WritePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="text-center mt-6 text-gray-700 w-full max-w-md mx-auto"
+            className="text-center mt-10 text-gray-700 w-full max-w-md mx-auto"
           >
-            <div className="text-xl sm:text-2xl text-pink-500 font-semibold mb-6">
+            <motion.p
+              className="text-xl sm:text-2xl text-pink-500 font-semibold mb-8 font-pacifico"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.8 }}
+            >
               이 순간을, 기억할게요.
-            </div>
+            </motion.p>
 
             <button
               onClick={() => {
                 setSubmitted(false);
-                setEntry("");
-                setEmotion("");
               }}
               className="w-full bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500 text-sm"
             >
