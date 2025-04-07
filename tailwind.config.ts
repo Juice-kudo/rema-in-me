@@ -1,8 +1,6 @@
-// tailwind.config.ts
-
 import type { Config } from "tailwindcss";
 
-const config: Partial<Config> = {
+const config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -23,6 +21,6 @@ const config: Partial<Config> = {
     "level-5",
   ],
   plugins: [],
-};
+} as unknown as Config; // ✅ 타입 단언으로 에러 방지
 
-export default config as Config;
+export default config;

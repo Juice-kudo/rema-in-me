@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { auth, db } from "@/lib/firebase";
@@ -36,7 +36,11 @@ export default function WritePage() {
       return;
     }
 
-    const today = new Date().toISOString().split("T")[0];
+    // ✅ 한국 시간 기준으로 날짜 저장
+    const now = new Date();
+    const koreaTime = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+    const today = koreaTime.toISOString().split("T")[0];
+
     const diaryRef = doc(db, "users", user.uid, "diaries", today);
 
     try {
@@ -91,6 +95,20 @@ export default function WritePage() {
               placeholder="Remain me"
               className="w-full p-2 border rounded-lg text-sm min-h-[120px] placeholder-gray-600"
             />
+            {/* 글자 수 & 멘트 */}
+            <div className="mt-2 text-sm text-right text-gray-500">
+              {entry.length}자{" "}
+              <span className="ml-2 text-pink-400">
+                {entry.length === 0
+                  ? "마음을 꺼내보세요"
+                  : entry.length < 50
+                  ? "살짝 마음이 열리기 시작했어요"
+                  : entry.length < 150
+                  ? "감정이 차오르고 있어요"
+                  : "이 순간, 진심이 담겼네요"}
+              </span>
+            </div>
+
 
             <button
               onClick={saveDiaryToFirestore}
@@ -107,7 +125,7 @@ export default function WritePage() {
             exit={{ opacity: 0 }}
             className="text-center mt-6 text-gray-700 w-full max-w-md mx-auto"
           >
-            <div className="text-xl sm:text-2xl text-pink-500 font-semibold mb-4">
+            <div className="text-xl sm:text-2xl text-pink-500 font-semibold mb-6">
               이 순간을, 기억할게요.
             </div>
 
@@ -117,7 +135,7 @@ export default function WritePage() {
                 setEntry("");
                 setEmotion("");
               }}
-              className="mt-2 w-full bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500 text-sm"
+              className="w-full bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500 text-sm"
             >
               ← 다시 작성하기
             </button>
