@@ -10,7 +10,7 @@ export default function DrawerMenu() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setIsLoggedIn(!!user);
@@ -22,6 +22,7 @@ export default function DrawerMenu() {
     { name: "Remain", path: "/write" },
     { name: "Me", path: "/chat" },
     { name: "Diary", path: "/history" },
+    { name: "대화 업로드", path: "/chatUpload" },
   ];
 
   const handleLogout = async () => {

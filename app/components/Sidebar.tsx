@@ -26,6 +26,8 @@ export default function Sidebar() {
     { name: "Remain", path: "/write" },
     { name: "Me", path: "/chat" },
     { name: "Diary", path: "/history" },
+    { name: "With me", path: "/upload" },
+
   ];
 
   return (
