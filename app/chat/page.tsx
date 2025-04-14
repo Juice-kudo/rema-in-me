@@ -101,7 +101,7 @@ export default function ChatPage() {
   return (
     <div className="min-h-screen px-4 py-6 sm:px-4 sm:ml-48 ml-0 bg-gradient-to-b from-pink-50 to-white">
       <h1 className="text-2xl sm:text-xl font-bold text-pink-600 mb-6 text-center">
-        To be you
+        나와 마주하기
       </h1>
 
       <div className="w-full max-w-md mx-auto p-4 bg-white rounded-2xl shadow">
@@ -124,7 +124,7 @@ export default function ChatPage() {
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="오늘의 나를 남겨주세요"
+          placeholder="편하게, 솔직하게, 마주해보세요"
           className="w-full p-2 border rounded-lg mt-2 text-sm min-h-[80px]"
         />
 

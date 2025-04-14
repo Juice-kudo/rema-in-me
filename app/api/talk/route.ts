@@ -1,17 +1,19 @@
 import { NextResponse } from 'next/server'
-import openai from '@/lib/openai';
+import openai from '@/lib/openai'
 import { generateKakaoPrompt } from '@/lib/generateKakaoPrompt'
-
+import { ChatCompletionMessageParam } from 'openai/resources'
 
 export async function POST(req: Request) {
+  const body = await req.json()
+
   const {
-    messages, // 현재 대화 내용 [{ role: 'user' | 'assistant', content: string }]
-    exampleMessages, // 카톡 예시 대화 [{ sender, message, ... }]
+    messages,
+    exampleMessages,
     userName,
     partnerName,
     userNickname,
     partnerNickname,
-  } = await req.json()
+  } = body
 
   const systemPrompt = generateKakaoPrompt(
     exampleMessages,
@@ -21,7 +23,7 @@ export async function POST(req: Request) {
     partnerNickname
   )
 
-  const chatMessages = [
+  const chatMessages: ChatCompletionMessageParam[] = [
     { role: 'system', content: systemPrompt },
     ...messages,
   ]

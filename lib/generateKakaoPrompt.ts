@@ -5,7 +5,7 @@ export interface ChatMessage {
   message: string;
 }
 
-// ✅ 로컬스토리지에 저장된 메시지 불러오기
+// ✅ 로컬스토리지에서 저장된 메시지 불러오기
 export function getParsedMessages(): ChatMessage[] {
   if (typeof window !== "undefined") {
     const stored = localStorage.getItem("parsedMessages");
@@ -20,7 +20,7 @@ export function getParsedMessages(): ChatMessage[] {
   return [];
 }
 
-// ✅ GPT 프롬프트 생성 함수
+// ✅ GPT 프롬프트 생성 함수 (말투 재현 + 감정 표현 최적화)
 export function generateKakaoPrompt(
   messages: ChatMessage[],
   userName: string,
@@ -28,19 +28,43 @@ export function generateKakaoPrompt(
   userNickname?: string,
   partnerNickname?: string
 ): string {
-  const systemPrompt = `
-당신은 ${partnerName}입니다. 당신은 과거에 ${userName}(${userNickname || userName})와 나눈 대화를 기억하고 있는 인물입니다.
-${userName}은 당신을 "${partnerNickname || partnerName}"라고 불렀고, 당신은 ${userName}을 "${userNickname || userName}"라고 불렀습니다.
+  const sortedMessages = [...messages]
+    .filter((m) => m.message.length > 4 && !m.message.includes("사진") && !m.message.startsWith("["))
+    .sort((a, b) => {
+      const dateTimeA = new Date(`${a.date} ${a.time}`);
+      const dateTimeB = new Date(`${b.date} ${b.time}`);
+      return dateTimeA.getTime() - dateTimeB.getTime();
+    });
 
-다음은 두 사람이 나눈 실제 대화 기록입니다.
-이 말투, 감정, 표현 방식, 분위기를 반영하여 대화해 주세요.
-너무 공손하거나 설명하지 말고, 과거 그 사람이 말했을 법한 말투로 자연스럽게 답하세요.
+  const recentMessages = sortedMessages.slice(-15).map((m) =>
+    `${m.sender === partnerName ? "너" : "나"}: ${m.message}`
+  );
 
-${messages
-    .map((m) => `[${m.time}] ${m.sender}: ${m.message}`)
-    .slice(-30)
-    .join("\n")}
+  const styleSummary = `
+- 짧고 빠른 리듬의 말투
+- 이모티콘이나 인터넷 말투 사용 (예: ㅋㅋ, 응응, 아아, 헐, ㄹㅇ)
+- 말끝 흐리기 (...), '~' 많음
+- 장난스럽고 감정 섞인 표현
+- 반말이나 편한 말투 허용
+- 이름 반복 사용 안 함
+- ${userName}(사용자)을 "너"라고 부르지 말고, 실제 대화에서 사용한 표현이나 별명만 사용하세요.
+- 필요 없다면 아예 호칭 없이 말해도 됩니다.
+
 `;
+
+  const systemPrompt = `
+당신은 이제 ${partnerName}입니다.
+과거에 ${userName}(사용자)와 아주 가까웠고, 지금 그 사람과 다시 대화 중입니다.
+절대 자신을 ${userName}이라 하지 마세요. GPT처럼 굴지 마세요.
+
+말투는 아래의 특징을 반드시 따르세요:
+${styleSummary}
+
+📝 실제 두 사람의 대화 예시:
+${recentMessages.join("\n")}
+
+이 흐름을 이어서, ${userNickname || userName}(사용자)에게 지금 자연스럽게 한마디 건네주세요.
+`; 
 
   return systemPrompt.trim();
 }

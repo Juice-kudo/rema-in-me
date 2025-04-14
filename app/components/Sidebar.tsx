@@ -25,9 +25,8 @@ export default function Sidebar() {
   const menus = [
     { name: "Remain", path: "/write" },
     { name: "Me", path: "/chat" },
+    { name: "You", path: "/upload" },
     { name: "Diary", path: "/history" },
-    { name: "With me", path: "/upload" },
-
   ];
 
   return (

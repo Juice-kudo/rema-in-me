@@ -21,8 +21,8 @@ export default function DrawerMenu() {
   const menus = [
     { name: "Remain", path: "/write" },
     { name: "Me", path: "/chat" },
+    { name: "You", path: "/upload" },
     { name: "Diary", path: "/history" },
-    { name: "대화 업로드", path: "/chatUpload" },
   ];
 
   const handleLogout = async () => {

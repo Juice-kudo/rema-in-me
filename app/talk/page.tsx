@@ -10,22 +10,14 @@ export default function TalkPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const parsedMessages = getParsedMessages();
+  const myName = typeof window !== "undefined" ? localStorage.getItem("myName") || "나" : "나";
   const router = useRouter();
-
   useEffect(() => {
     if (parsedMessages.length === 0) {
       router.push("/upload");
-    } else {
-      const firstSender = parsedMessages[0].sender;
-      setMessages([
-        {
-          sender: "bot",
-          text: `안녕, 나 ${firstSender}야. 다시 이렇게 마주하게 되니까... 기분이 이상하네.`,
-        },
-      ]);
     }
   }, []);
-
+  
   const handleSend = async () => {
     if (!input.trim()) return;
 
@@ -33,8 +25,7 @@ export default function TalkPage() {
     setMessages(newMessages);
     setIsLoading(true);
 
-    const userName = "나";
-    const partnerName = parsedMessages[0]?.sender || "상대방";
+    const partnerName = parsedMessages.find((m) => m.sender !== myName)?.sender || "상대방";
 
     try {
       const res = await fetch("/api/talk", {
@@ -46,12 +37,18 @@ export default function TalkPage() {
             content: m.text,
           })),
           exampleMessages: parsedMessages,
-          userName,
-          partnerName,
-          userNickname: "딸",
+          userName: myName,
+          partnerName: partnerName,
+          userNickname: myName,
           partnerNickname: partnerName,
         }),
       });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("❌ 서버 응답 에러:", errorText);
+        return;
+      }
 
       const data = await res.json();
       setMessages((prev) => [...prev, { sender: "bot", text: data.reply }]);
@@ -69,7 +66,9 @@ export default function TalkPage() {
         Talk Again
       </h1>
       <h2 className="text-sm text-center text-gray-500 mb-4">
-        {parsedMessages.length > 0 ? `${parsedMessages[0].sender}와의 대화` : ""}
+        {parsedMessages.length > 0
+          ? `${parsedMessages.find((m) => m.sender !== myName)?.sender || "상대방"}와의 대화`
+          : ""}
       </h2>
 
       <div className="max-w-md mx-auto bg-white rounded-xl shadow p-4">

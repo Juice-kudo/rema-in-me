@@ -8,10 +8,11 @@ export default function UploadPage() {
   const [chatText, setChatText] = useState("");
   const [parsedMessages, setParsedMessages] = useState<ChatMessage[]>([]);
   const [fileName, setFileName] = useState("");
+  const [myName, setMyName] = useState("이름입력");
   const [otherPerson, setOtherPerson] = useState("");
   const router = useRouter();
 
-  const extractOtherPerson = (messages: ChatMessage[], myName = "나"): string | null => {
+  const extractOtherPerson = (messages: ChatMessage[], myName: string): string | null => {
     const senderCounts: Record<string, number> = {};
 
     messages.forEach((msg) => {
@@ -38,11 +39,12 @@ export default function UploadPage() {
       const parsed = parseKakaoChat(text);
       setParsedMessages(parsed);
 
-      const opponent = extractOtherPerson(parsed);
+      const opponent = extractOtherPerson(parsed, myName);
       if (opponent) setOtherPerson(opponent);
 
-      // ✅ 로컬스토리지 저장 후 /talk로 이동
+      // ✅ 로컬스토리지에 저장
       localStorage.setItem("parsedMessages", JSON.stringify(parsed));
+      localStorage.setItem("myName", myName);
       router.push("/talk");
     };
 
@@ -52,8 +54,18 @@ export default function UploadPage() {
   return (
     <div className="min-h-screen px-6 py-12 sm:ml-48 ml-0 bg-gradient-to-b from-pink-50 to-white text-center">
       <h1 className="text-2xl font-bold text-pink-600 font-pacifico mb-6">
-        과거의 대화를 불러오기
+        그 사람과 나눴던 대화를 보내주세요.
       </h1>
+
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="예시:이주원"
+          value={myName}
+          onChange={(e) => setMyName(e.target.value)}
+          className="border p-2 rounded w-64 text-sm"
+        />
+      </div>
 
       <input
         type="file"
